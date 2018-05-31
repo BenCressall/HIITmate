@@ -35,6 +35,10 @@
         
         
             // Global Variables
+            var exercise = "";
+            var rest = "";
+            var repititions = "";
+            var data = "";
             
             // Build data entry page
             
@@ -87,10 +91,10 @@
             
             function begin(){
                 
-                var exercise = Number(document.getElementById("runtimeI").value);
-                var rest = Number(document.getElementById("resttimeI").value);
-                var repititions = Number(document.getElementById("repI").value);
-                var data = [exercise,rest,repititions];
+                exercise = Number(document.getElementById("runtimeI").value);
+                rest = Number(document.getElementById("resttimeI").value);
+                repititions = Number(document.getElementById("repI").value);
+                data = [exercise,rest,repititions];
                 
                 mainNode.removeChild(runtimeE);
                 mainNode.removeChild(runtimeI);
@@ -131,9 +135,9 @@
                 
                 
                 // initiate 5 min warmup in miliseconds
-                var distance = 299000;
+                var distance = 9000;
                 
-                timeP.innerHTML = "5:00";
+                timeP.innerHTML = "10";
                 
                 var warmup = setInterval(function() {
                     
@@ -148,78 +152,113 @@
                     
                 if (minutes>0){
                     timeP.innerHTML = minutes + ":" + seconds;            
-                } 
+                    } 
                     
                 else {
                     timeP.innerHTML = seconds;
-                }
+                    }
         
-                    
-                console.log([minutes,seconds]);
-                    
-                
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                if (distance < 0){
+                 if (distance < 0){
                     
                     clearInterval(warmup)
-                }            
+                    
+                }      
                     
                 },1000)
                 
+                mainNode.style.backgroundColor = "grey";
                 
-                
-                
-                
-                
-                mainNode.style.backgroundColor = "red";
+                setTimeout(restTime,11000)
 
             };
             
-            /*
+
+            function restTime() {
+                
+                
+                var restDistance = rest * 1000;
+                
+                timeP.innerHTML = rest;
+                infoP.innerHTML = repititions;
+                
+                mainNode.style.backgroundColor = "red";
+                
+                var restInterval = setInterval(function(){
+                    
+                    restDistance = restDistance - 1000;
+                    var seconds = Math.floor((restDistance % (1000 * 60)) / 1000);
+
+
+                    console.log(restDistance);
+
+                    if (seconds < 10){
+                        seconds = "0" + seconds;
+                        }
+
+                    timeP.innerHTML = seconds;
+
+                    if (restDistance <= 0){
+
+                        clearInterval(restInterval);
+
+                }    
+                    
+                },1000)
+                
+                setTimeout(exerciseTime,restDistance + 1000);
+                
+                
+                
+            };
             
-            if (exerciseIndex === 0)
-                    {
-
-                        var explanation = document.createElement('p');
-                        explanation.setAttribute("id", "explanation");
-                        explanation.textContent = infomessage;
-                        mainNode.appendChild(explanation);
-
-
-                        var listNode = document.createElement("ol");
-                        listNode.setAttribute("id", "list");    
-
-                        for (i=0; i < exerciseNum; i++)
-                            {
-                                var exercise = workout[i];
-                                var index = i + 1;
-
-                                var elementNode = document.createElement('li')
-                                var textNode = document.createTextNode(workout[index].name);
-                                elementNode.appendChild(textNode);
-                                listNode.appendChild(elementNode);
-
-                            }
-
-                        mainNode.appendChild(listNode); 
-
-
-                        var beginButton = document.createElement('button');
-                        beginButton.setAttribute("id", "beginbutton");
-                        beginButton.innerHTML = "Begin Workout";
-                        beginButton.onclick = begin;
-
-                        mainNode.appendChild(beginButton);
-
+            function exerciseTime(){
+                
+                var exerciseDistance = exercise * 1000;
+                
+                timeP.innerHTML = exercise;
+                mainNode.style.backgroundColor = "green"
+                
+                var exerciseInterval = setInterval(function(){
+                    
+                    exerciseDistance -= 1000;
+                    var seconds = Math.floor((exerciseDistance % (1000 * 60)) / 1000);
+                    
+                    if (seconds < 10){
+                            
+                        seconds = "0" + seconds;
                     }
-        
-        */
+
+                    timeP.innerHTML = seconds;
+
+                    if (exerciseDistance <= 0){
+                        
+                        repititions -= 1;
+                        clearInterval(exerciseInterval);
+                    }    
+                    
+                },1000)
+                
+                    
+                if (repititions === 1){
+                    
+                    setTimeout(end,exerciseDistance+1000);
+                    
+                    }
+                else {
+                  
+                    setTimeout(restTime,exerciseDistance+1000);  
+                    };
+                  
+            };
+            
+            function end(){
+                
+                mainNode.style.backgroundColor = "white";
+                infoP.innerHTML = "Session Complete";
+                mainNode.removeChild(timeP);
+            
+            }
+
         
     
         </script>
