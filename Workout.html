@@ -1,0 +1,227 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Lift Mate</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+        <link rel="stylesheet" href="HIITmate.css" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name=viewport content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" sizes="196x196" href="LiftMate.png" />
+        <link rel="apple-touch-icon-precomposed" href="LiftMate.png" />
+        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-orange.min.css" />
+    </head>
+    <body>
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" id="headerDiv">
+          <header class="mdl-layout__header" id="header">
+            <button onclick="location.href = 'index.html';" class="mdl-layout-icon mdl-button mdl-js-button mdl-button--icon">
+              <i class="material-icons">arrow_back</i>
+            </button>
+            <div class="mdl-layout__header-row">
+              <span class="mdl-layout-title" id="headerBarTitle">Workout</span>
+              <div class="mdl-layout-spacer"></div>
+            </div>
+          </header>              
+          <main class="mdl-layout__content">
+          </main>
+        </div>
+
+        <!--   JavaScript files:   -->
+        <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+        <script>
+        
+        
+            // Global Variables
+            
+            // Build data entry page
+            
+            var mainNode = document.getElementsByTagName("main")[0];
+
+            var runtimeE = document.createElement('p');
+            runtimeE.setAttribute("id", "runtimeE");
+            runtimeE.textContent = "Input Exercise Time:";
+            mainNode.appendChild(runtimeE);
+            
+            var runtimeI = document.createElement("input");
+            runtimeI.setAttribute("type","text");
+            runtimeI.setAttribute("id","runtimeI");
+            runtimeI.setAttribute("size","10");
+            runtimeI.setAttribute("pattern","[0-9]*");
+            mainNode.appendChild(runtimeI);
+            
+            var resttimeE = document.createElement('p');
+            resttimeE.setAttribute("id", "resttimeE");
+            resttimeE.textContent = "Input Rest Time:";
+            mainNode.appendChild(resttimeE);
+            
+            var resttimeI = document.createElement("input");
+            resttimeI.setAttribute("type","text");
+            resttimeI.setAttribute("id","resttimeI");
+            resttimeI.setAttribute("size","10");
+            resttimeI.setAttribute("pattern","[0-9]*");
+            mainNode.appendChild(resttimeI);
+            
+            var repE = document.createElement('p');
+            repE.setAttribute("id", "repE");
+            repE.textContent = "Input Rest Time:";
+            mainNode.appendChild(repE);
+            
+            var repI = document.createElement("input");
+            repI.setAttribute("type","text");
+            repI.setAttribute("id","repI");
+            repI.setAttribute("size","10");
+            repI.setAttribute("pattern","[0-9]*");
+            mainNode.appendChild(repI);
+            
+            var beginButton = document.createElement('button');
+            beginButton.setAttribute("id", "beginbutton");
+            beginButton.innerHTML = "Begin Workout";
+            beginButton.onclick = begin;
+            mainNode.appendChild(beginButton);
+            
+            
+            // Functions
+            
+            function begin(){
+                
+                var exercise = Number(document.getElementById("runtimeI").value);
+                var rest = Number(document.getElementById("resttimeI").value);
+                var repititions = Number(document.getElementById("repI").value);
+                var data = [exercise,rest,repititions];
+                
+                mainNode.removeChild(runtimeE);
+                mainNode.removeChild(runtimeI);
+                mainNode.removeChild(resttimeE);
+                mainNode.removeChild(resttimeI);
+                mainNode.removeChild(repE);
+                mainNode.removeChild(repI);
+                mainNode.removeChild(beginButton);
+                
+                // Remove the Header to make size for the screen
+                var headerDiv = document.getElementById("headerDiv");
+                var header = document.getElementById("header");
+                headerDiv.removeChild(header);
+                
+                var backbutton = document.createElement("button");
+                backbutton.setAttribute("id","backbutton");
+                backbutton.setAttribute("class","mdl-layout-icon mdl-button mdl-js-button mdl-button--icon")
+                backbutton.onclick = function () {
+                    location.href = "index.html";
+                    };
+                
+                // add button style from mdl
+                var buttonStyle = document.createElement("i");
+                buttonStyle.setAttribute("class","material-icons");
+                buttonStyle.innerHTML = "arrow_back";
+                
+                backbutton.appendChild(buttonStyle);
+                mainNode.appendChild(backbutton);
+                
+                // add info div & timer paragraphs
+                var infoP = document.createElement("p")
+                infoP.setAttribute("id","infoP");
+                mainNode.appendChild(infoP);
+                
+                var timeP = document.createElement("p")
+                timeP.setAttribute("id","timeP");
+                mainNode.appendChild(timeP);
+                
+                
+                // initiate 5 min warmup in miliseconds
+                var distance = 299000;
+                
+                timeP.innerHTML = "5:00";
+                
+                var warmup = setInterval(function() {
+                    
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                distance = distance - 1000;
+                    
+                if (seconds < 10){
+                    seconds = "0" + seconds  ;
+                }      
+                    
+                if (minutes>0){
+                    timeP.innerHTML = minutes + ":" + seconds;            
+                } 
+                    
+                else {
+                    timeP.innerHTML = seconds;
+                }
+        
+                    
+                console.log([minutes,seconds]);
+                    
+                
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                if (distance < 0){
+                    
+                    clearInterval(warmup)
+                }            
+                    
+                },1000)
+                
+                
+                
+                
+                
+                
+                mainNode.style.backgroundColor = "red";
+
+            };
+            
+            /*
+            
+            if (exerciseIndex === 0)
+                    {
+
+                        var explanation = document.createElement('p');
+                        explanation.setAttribute("id", "explanation");
+                        explanation.textContent = infomessage;
+                        mainNode.appendChild(explanation);
+
+
+                        var listNode = document.createElement("ol");
+                        listNode.setAttribute("id", "list");    
+
+                        for (i=0; i < exerciseNum; i++)
+                            {
+                                var exercise = workout[i];
+                                var index = i + 1;
+
+                                var elementNode = document.createElement('li')
+                                var textNode = document.createTextNode(workout[index].name);
+                                elementNode.appendChild(textNode);
+                                listNode.appendChild(elementNode);
+
+                            }
+
+                        mainNode.appendChild(listNode); 
+
+
+                        var beginButton = document.createElement('button');
+                        beginButton.setAttribute("id", "beginbutton");
+                        beginButton.innerHTML = "Begin Workout";
+                        beginButton.onclick = begin;
+
+                        mainNode.appendChild(beginButton);
+
+                    }
+        
+        */
+        
+    
+        </script>
+    </body>
+</html>

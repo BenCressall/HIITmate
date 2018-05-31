@@ -1,0 +1,18 @@
+#workOuts{    
+    position:absolute;
+    top: 16%;
+    left: 12.5%;
+    width: 75%;
+    height: 25%;
+    font-size: 200%
+}
+
+
+#progress{    
+    position:absolute;
+    top: 58%;
+    left: 12.5%;
+    width: 75%;
+    height: 25%;
+    font-size: 200%;
+}
