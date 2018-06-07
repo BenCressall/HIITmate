@@ -12,7 +12,7 @@
         <meta name=viewport content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" sizes="196x196" href="HIITmate.png" />
         <link rel="apple-touch-icon-precomposed" href="HIITmate.png" />
-        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-orange.min.css" />
+        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue-light_blue.min.css" />
     </head>
     <body>
         <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" id="headerDiv">
@@ -39,6 +39,7 @@
             var rest = "";
             var repititions = "";
             var data = "";
+            var check = 0
             
             // Build data entry page
             
@@ -138,7 +139,7 @@
                 var distance = 9000;
                 
                 timeP.innerHTML = "10";
-                infoP.innerHTML = ""
+                infoP.innerHTML = "Get Ready"
                 
                 var warmup = setInterval(function() {
                     
@@ -167,7 +168,7 @@
                     
                 },1000)
                 
-                mainNode.style.backgroundColor = "grey";
+                mainNode.style.backgroundColor = "white";
                 
                 setTimeout(restTime,11000)
 
@@ -179,10 +180,16 @@
                 
                 var restDistance = rest * 1000;
                 
-                timeP.innerHTML = rest;
-                infoP.innerHTML = "Reps: " + repititions;
+                if (rest < 10 && check === 0){
+                    
+                    rest = "0" + rest;
+                    check = 1
+                }
                 
-                mainNode.style.backgroundColor = "red";
+                timeP.innerHTML = rest;
+                infoP.innerHTML = "Walk <br> <br> <br> Reps: " + repititions;
+                
+                mainNode.style.backgroundColor = "white";
                 
                 var restInterval = setInterval(function(){
                     
@@ -216,8 +223,16 @@
                 
                 var exerciseDistance = exercise * 1000;
                 
+                
+                if (exercise < 10 && check === 1){
+                    
+                    exercise = "0" + exercise;
+                    check = 2;
+                }
+                
                 timeP.innerHTML = exercise;
-                mainNode.style.backgroundColor = "green"
+                infoP.innerHTML = "Run <br> <br> <br> Reps: " + repititions;
+                mainNode.style.backgroundColor = "white"
                 
                 var exerciseInterval = setInterval(function(){
                     
